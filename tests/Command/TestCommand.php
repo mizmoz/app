@@ -11,7 +11,7 @@ class TestCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('test');
     }
@@ -19,8 +19,9 @@ class TestCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Executing test command.');
+        return 0;
     }
 }

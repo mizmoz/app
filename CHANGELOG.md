@@ -1,3 +1,7 @@
+v1.0.1
+
+- Update symfony/console to v7.1
+
 v1.0.0
 
 - Update to use PHP 8.3
