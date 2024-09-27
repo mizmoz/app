@@ -15,19 +15,19 @@ use Psr\Http\Message\ServerRequestInterface;
 class App extends \Mizmoz\App\App implements HttpAppInterface
 {
     /**
-     * @var DispatcherInterface
+     * @var DispatcherInterface|null
      */
-    private $dispatcher;
+    private ?DispatcherInterface $dispatcher = null;
 
     /**
-     * @var ServerRequestInterface
+     * @var ServerRequestInterface|null
      */
-    private $request;
+    private ?ServerRequestInterface $request = null;
 
     /**
-     * @var RouteInterface
+     * @var RouteInterface|null
      */
-    private $route;
+    private ?RouteInterface $route = null;
 
     /**
      * @inheritdoc
@@ -51,7 +51,7 @@ class App extends \Mizmoz\App\App implements HttpAppInterface
         $dispatcher = $this->getDispatcher();
 
         // dispatch the request
-        $response = $dispatcher->dispatch($this->getRequest());
+        $dispatcher->dispatch($this->getRequest());
 
         return $this;
     }
@@ -73,7 +73,7 @@ class App extends \Mizmoz\App\App implements HttpAppInterface
      */
     public function getRequest(): ServerRequestInterface
     {
-        return ($this->request ? $this->request : ServerRequest::fromGlobals());
+        return $this->request ?: ServerRequest::fromGlobals();
     }
 
     /**

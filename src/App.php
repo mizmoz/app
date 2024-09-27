@@ -17,19 +17,19 @@ use Tracy\Debugger;
 abstract class App implements AppInterface
 {
     /**
-     * @var AppInterface
+     * @var ?AppInterface
      */
-    protected static $instance;
+    protected static ?AppInterface $instance = null;
 
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * @var ConfigInterface
      */
-    protected $config;
+    protected ConfigInterface $config;
 
     /**
      * @inheritdoc
@@ -79,7 +79,7 @@ abstract class App implements AppInterface
      */
     public static function isCli(): bool
     {
-        return (php_sapi_name() === 'cli');
+        return php_sapi_name() === 'cli';
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class App implements AppInterface
     /**
      * @inheritDoc
      */
-    public function has($id)
+    public function has($id): bool
     {
         return $this->container->has($id);
     }

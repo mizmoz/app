@@ -12,20 +12,30 @@ use Symfony\Component\Console\Command\Command;
 class App extends \Mizmoz\App\App implements CliAppInterface
 {
     /**
-     * @var Application
+     * @var ?Application
      */
-    protected $application;
+    protected ?Application $application = null;
+
+    /**
+     * Use the application instance, will throw an exception if the application is not ready
+     *
+     * @return Application
+     */
+    private function useApplication(): Application
+    {
+        if (! $this->application) {
+            throw new AppNotReadyException('You must boot the app before you can use the application');
+        }
+
+        return $this->application;
+    }
 
     /**
      * @inheritDoc
      */
     public function addCommand(Command $command): AppInterface
     {
-        if (! $this->application) {
-            throw new AppNotReadyException('You must boot the app before you can add commands');
-        }
-
-        $this->application->add($command);
+        $this->useApplication()->add($command);
         return $this;
     }
 
@@ -63,7 +73,7 @@ class App extends \Mizmoz\App\App implements CliAppInterface
     public function run(): AppInterface
     {
         // allow input & output to be passed for testing
-        call_user_func_array([$this->application, 'run'], func_get_args());
+        call_user_func_array([$this->useApplication(), 'run'], func_get_args());
 
         return $this;
     }

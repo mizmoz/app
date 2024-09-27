@@ -15,5 +15,5 @@ interface AppCliRegistrationInterface
      * @param ContainerInterface $container
      * @param ConfigInterface $config
      */
-    public function registerCli(CliAppInterface $app, ContainerInterface $container, ConfigInterface $config);
+    public function registerCli(CliAppInterface $app, ContainerInterface $container, ConfigInterface $config): void;
 }

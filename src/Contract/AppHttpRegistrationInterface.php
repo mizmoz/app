@@ -15,5 +15,5 @@ interface AppHttpRegistrationInterface
      * @param ContainerInterface $container
      * @param ConfigInterface $config
      */
-    public function registerHttp(HttpAppInterface $app, ContainerInterface $container, ConfigInterface $config);
+    public function registerHttp(HttpAppInterface $app, ContainerInterface $container, ConfigInterface $config): void;
 }

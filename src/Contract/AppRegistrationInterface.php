@@ -14,5 +14,5 @@ interface AppRegistrationInterface
      * @param ContainerInterface $container
      * @param ConfigInterface $config
      */
-    public function register(ContainerInterface $container, ConfigInterface $config);
+    public function register(ContainerInterface $container, ConfigInterface $config): void;
 }
