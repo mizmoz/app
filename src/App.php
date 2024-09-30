@@ -8,6 +8,7 @@ use Mizmoz\App\Exception\InvalidArgumentException;
 use Mizmoz\App\Exception\RuntimeException;
 use Mizmoz\Config\Config;
 use Mizmoz\Config\Contract\ConfigInterface;
+use Mizmoz\Config\Contract\EnvironmentInterface;
 use Mizmoz\Config\Environment;
 use Mizmoz\Container\Container;
 use Mizmoz\Container\Contract\ContainerInterface;
@@ -45,14 +46,14 @@ abstract class App implements AppInterface
      *
      * @param string $projectRoot
      * @param string $configDirectory
-     * @param string $environment
-     * @return AppInterface
+     * @param string|null $environment
+     * @return static
      */
     public static function create(
         string $projectRoot,
         string $configDirectory = './config',
         string $environment = null
-    ): AppInterface
+    ): static
     {
         // get the environment
         $environment = (
@@ -88,9 +89,9 @@ abstract class App implements AppInterface
     public function boot(): AppInterface
     {
         // init the error reporting
-        if ($this->config()->get('app.debugger.enable')) {
-            $platform = ($this->platform() === Environment::ENV_PRODUCTION ? Debugger::PRODUCTION : Debugger::DEVELOPMENT);
-            Debugger::enable($platform);
+        $isProduction = $this->platform() === EnvironmentInterface::ENV_PRODUCTION;
+        if (!$isProduction && $this->config()->get('app.debugger.enable')) {
+            Debugger::enable();
 
             // set PHPStorm as the editor
             Debugger::$editor = $this->config()->get('app.debugger.editor');

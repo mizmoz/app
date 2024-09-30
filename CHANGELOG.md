@@ -1,3 +1,7 @@
+v1.0.2
+
+- Fix issue with late return of App::create not using static for return type
+
 v1.0.1
 
 - Update symfony/console to v7.1
